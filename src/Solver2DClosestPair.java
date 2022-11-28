@@ -1,26 +1,58 @@
-import java.util.Arrays;
-
 public class Solver2DClosestPair {
 
     // plot points
     public static void main(String[] args) {
 
-        // Generate 10 random points
-        points[] P = points.generatePoints(10);
+        
 
-        // sort points by x
-        Arrays.sort(P, points::compareX);
+        // // number of trials
+        // int n = 10;
+        // // number of points
+        // int m = 5;
 
-        // Set int[] P equal to a copy of pointsArray
-        points[] Q = Arrays.copyOf(P, P.length);
+        // long startTime, endTime, duration;
+        // double[] algoFast = new double[n];
+        // double[] algoSlow = new double[n];
 
-        Arrays.sort(Q, points::compareY);
+        // for (int i = 0; i < n; i++) {
 
-        int[] closestPair = points.efficientClosetPair(P, Q);
-        System.out.println(Arrays.toString(closestPair));
-        int[] check = points.exhaustiveSearch(P);
-        System.out.println(Arrays.toString(check));
+        //     // generate points
+        //     startTime = System.nanoTime();
+        //     int[] fastTempArray = points.closestPairSolver(m);
+        //     endTime = System.nanoTime();
+        //     duration = (endTime - startTime);
+        //     algoFast[i] = duration;
 
+        //     startTime = System.nanoTime();
+        //     int[] slowTempArray = points.exhaustiveSearchSolver(n);
+        //     endTime = System.nanoTime();
+        //     duration = (endTime - startTime);
+        //     algoSlow[i] = duration;
+
+        // }
+
+        // // calculate average
+        // double fastAvg = 0;
+        // double slowAvg = 0;
+        // for (int i = 0; i < n; i++) {
+        //     fastAvg += algoFast[i];
+        //     slowAvg += algoSlow[i];
+        // }
+        // fastAvg = fastAvg / n;
+        // slowAvg = slowAvg / n;
+
+        // System.out.println("Average time for fast algorithm: " + fastAvg + " ns");
+        // System.out.println("Average time for slow algorithm: " + slowAvg + " ns");
+
+        // // The ___ is the fastest
+        // if (fastAvg < slowAvg) {
+        //     System.out.println("The fast algorithm is the fastest");
+        //     // by ___ ns
+        //     System.out.println("by " + (slowAvg - fastAvg) + " ns");
+        // } else {
+        //     System.out.println("The slow algorithm is the fastest");
+        //     // by ___ ns
+        //     System.out.println("by " + (fastAvg - slowAvg) + " ns");
+        // }
     }
-
 }

@@ -36,14 +36,14 @@ public class points {
         return Integer.compare(p1.getX(), p2.getX());
     }
 
-    // generate random points method
+    // generate a distict set of points
     public static points[] generatePoints(int n) {
-        // Generate n random points
         points[] points = new points[n];
+
         for (int i = 0; i < n; i++) {
-            // Generate random x and y coordinates
-            points[i] = new points((int) (Math.random() * 100), (int) (Math.random() * 100));
+            points[i] = new points((int) (Math.random() * 1000), (int) (Math.random() * 1000));
         }
+
         return points;
     }
 
@@ -106,29 +106,68 @@ public class points {
         // Get the x coordinate of the middle point
         int m = P[P.length / 2].getX();
 
-        // Copy all the points of Q for which the x coordinate is within d[4] of m
+        // Copy all the points of Q into strip for which abs(x - m) < d
         int j = 0;
         for (int i = 0; i < Q.length; i++) {
             if (Math.abs(Q[i].getX() - m) < d[4]) {
-                strip[j++] = Q[i];
+                strip[j] = Q[i];
+                j++;
             }
         }
 
         // Set dminsq equal to the square of the minimum distance
         int dminsq = d[4] * d[4];
-
-        for (int i = 0; i < strip.length - 1; i++) {
-            while (strip[i] != null && strip[i + 1] != null && strip[i + 1].getY() - strip[i].getY() < dminsq) {
-                int[] dStrip = new int[] { strip[i].getX(), strip[i].getY(), strip[i + 1].getX(), strip[i + 1].getY(),
-                        (int) dist(strip[i], strip[i + 1]) };
-                if (dStrip[4] < d[4]) {
-                    d = dStrip;
+        
+        // for loop
+        for(int i = 0; i < strip.length; i++){
+            int k = i + 1;
+            while(k < strip.length && (strip[k].getY() - strip[i].getY()) < dminsq){
+                int dist = (int) dist(strip[i], strip[k]);
+                if(dist < dminsq){
+                    dminsq = dist;
+                    d[0] = strip[i].getX();
+                    d[1] = strip[i].getY();
+                    d[2] = strip[k].getX();
+                    d[3] = strip[k].getY();
+                    d[4] = dminsq;
                 }
-                i++;
+                k++;
             }
         }
 
+        // TODO: Fix ts \/
+        // for (int i = 0; i < strip.length - 2; i++) {
+        //     int k = i + 1;
+        //     while (k <= strip.length - 1 && (strip[k].getY() - strip[i].getY()) < dminsq) {
+        //         dminsq = Math.min(dminsq, (int) (Math.pow((strip[i].getX() - strip[k].getY()), 2)
+        //                 + Math.pow((strip[i].getY() - strip[k].getY()), 2)));
+        //         k++;
+        //     }
+        // }
+
+        // dminsq = (int) Math.sqrt(dminsq);
+        
+        // return new int[] { d[0], d[1], d[2], d[3], dminsq };
         return d;
 
+    }
+
+    // Method to do it all
+
+    public static int[] closestPairSolver(int n) {
+        points[] P = generatePoints(n);
+        points[] Q = P.clone();
+        Arrays.sort(P, points::compareX);
+        Arrays.sort(Q, points::compareY);
+        return efficientClosetPair(P, Q);
+    }
+
+    // Method to exhaustiveSearch
+    public static int[] exhaustiveSearchSolver(int n) {
+        points[] P = generatePoints(n);
+        points[] Q = P.clone();
+        Arrays.sort(P, points::compareX);
+        Arrays.sort(Q, points::compareY);
+        return exhaustiveSearch(P);
     }
 }
