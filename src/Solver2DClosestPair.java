@@ -8,8 +8,8 @@ public class Solver2DClosestPair {
         long startTime, endTime, duration;
         int pointsToTest = 5000;
         int trials = 1000;
-        long[] fastAlgoTime = new long[trials];
-        long[] slowAlgoTime = new long[trials];
+        double [] fastAlgoTime = new double [trials];
+        double [] slowAlgoTime = new double [trials];
 
         for (int i = 0; i < trials; i++) {
 
