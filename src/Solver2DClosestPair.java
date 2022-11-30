@@ -5,8 +5,8 @@ public class Solver2DClosestPair {
     // plot points
     public static void main(String[] args) {
 
-        long startTime, endTime, duration;
-        int pointsToTest = 5000;
+        double startTime, endTime, duration;
+        int pointsToTest = 2500;
         int trials = 1000;
         double [] fastAlgoTime = new double [trials];
         double [] slowAlgoTime = new double [trials];
@@ -31,7 +31,7 @@ public class Solver2DClosestPair {
 
             // Start time
             startTime = System.nanoTime();
-            int[] bruteForcePoints = points.exhaustiveSearch(P);
+            //int[] bruteForcePoints = points.exhaustiveSearch(P);
             // End time
             endTime = System.nanoTime();
             // Duration
@@ -50,13 +50,11 @@ public class Solver2DClosestPair {
         int fastAlgoAverage = 0;
         int slowAlgoAverage = 0;
         
+        // calculate the average without overflow
         for (int i = 0; i < trials; i++) {
-            fastAlgoAverage += fastAlgoTime[i];
-            slowAlgoAverage += slowAlgoTime[i];
+            fastAlgoAverage += fastAlgoTime[i] / trials;
+            slowAlgoAverage += slowAlgoTime[i] / trials;
         }
-
-        fastAlgoAverage /= trials;
-        slowAlgoAverage /= trials;
 
         System.out.println("Fast Algorithm Average: " + fastAlgoAverage);
         System.out.println("Slow Algorithm Average: " + slowAlgoAverage);
