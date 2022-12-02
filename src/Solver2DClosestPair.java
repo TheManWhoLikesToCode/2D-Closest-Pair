@@ -6,7 +6,7 @@ public class Solver2DClosestPair {
     public static void main(String[] args) {
 
         long startTime, endTime, duration;
-        int pointsToTest = 5000;
+        int pointsToTest = 50;
         int trials = 1000;
         double [] fastAlgoTime = new double [trials];
         double [] slowAlgoTime = new double [trials];
@@ -20,7 +20,7 @@ public class Solver2DClosestPair {
 
             // Start time
             startTime = System.nanoTime();
-            int[] fastAlgoPoints = points.efficientClosetPair(P, Q);
+            float[] fastAlgoPoints = points.efficientClosetPair(P, Q);
             // End time
             endTime = System.nanoTime();
             // Duration
@@ -31,7 +31,7 @@ public class Solver2DClosestPair {
 
             // Start time
             startTime = System.nanoTime();
-            int[] bruteForcePoints = points.exhaustiveSearch(P);
+            float[] bruteForcePoints = points.exhaustiveSearch(P);
             // End time
             endTime = System.nanoTime();
             // Duration

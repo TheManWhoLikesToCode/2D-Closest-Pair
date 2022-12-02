@@ -21,6 +21,11 @@ public class points {
         return y;
     }
 
+    // Print points
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
     // Algebraic distance formula
     public static float dist(points p1, points p2) {
         return (float) Math.sqrt(Math.pow(p1.getX() - p2.getX(), 2) + Math.pow(p1.getY() - p2.getY(), 2));
@@ -41,8 +46,11 @@ public class points {
         points[] points = new points[n];
 
         for (int i = 0; i < n; i++) {
-            points[i] = new points((int) (Math.random() * 10000), (int) (Math.random() * 10000));
+            points[i] = new points((int) (Math.random() * 100), (int) (Math.random() * 100));
         }
+
+        // Remove duplicates
+        points = Arrays.stream(points).distinct().toArray(points[]::new);
 
         return points;
     }
@@ -50,15 +58,16 @@ public class points {
     // split array method
     public static points[] splitArray(points[] points, int start, int end) {
         // Split array into two halves
-        points[] split = new points[end - start];
+        points[] splitArray = new points[end - start];
         for (int i = start; i < end; i++) {
-            split[i - start] = points[i];
+            splitArray[i - start] = points[i];
         }
-        return split;
+        
+        return splitArray;
     }
 
     // exhaustive search method
-    public static int[] exhaustiveSearch(points[] points) {
+    public static float[] exhaustiveSearch(points[] points) {
         int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
         // Initialize minimum distance to infinity
         float min = Float.POSITIVE_INFINITY;
@@ -78,10 +87,10 @@ public class points {
                 }
             }
         }
-        return new int[] { x1, y1, x2, y2, (int) min };
+        return new float[] { x1, y1, x2, y2, min };
     }
 
-    public static int[] efficientClosetPair(points[] P, points[] Q) {
+    public static float[] efficientClosetPair(points[] P, points[] Q) {
 
         if (P.length <= 3) {
             return exhaustiveSearch(P);
@@ -94,51 +103,50 @@ public class points {
         points[] Q2 = splitArray(Q, Q.length / 2, Q.length);
 
         // Find closest pair in each half
-        int[] dLeft = efficientClosetPair(P1, Q1);
-        int[] dRight = efficientClosetPair(P2, Q2);
+        float[] dLeft = efficientClosetPair(P1, Q1);
+        float[] dRight = efficientClosetPair(P2, Q2);
 
         // Find minimum distance
-        int[] d = dLeft[4] < dRight[4] ? dLeft : dRight;
+        float[] dMin = dLeft[4] < dRight[4] ? dLeft : dRight;
+        float distanceMin = dMin[4];
+        //float distanceMin = d < dMin[4] ? d : dMin[4];
 
-        // Get the x coordinate of the middle point
-        int m = P[P.length / 2].getX();
+        // Find the middle point
+        int m = P[(P.length / 2)-1].getX();
 
         // Find points in strip
-        points[] strip = new points[Q.length - 1];
+        points[] strip = new points[P.length];
 
-        // Copy all the points of Q into strip for which abs(x - m) < d
-        int ponitsOnSterip = 0;
+        // Find points in strip with distance less than dMin
         int j = 0;
-        for (int i = 0; i < Q.length - 1; i++) {
-            if (Math.abs(Q[i].getX() - m) < d[4]) {
+        for (int i = 0; i < P.length; i++) {
+            if (Math.abs(Q[i].getX() - m) < distanceMin) {
                 strip[j] = Q[i];
-                ponitsOnSterip++;
                 j++;
             }
         }
 
         // Set dminsq equal to the square of the minimum distance
-        int dminsq = d[4] * d[4];
+        float dminsq = dMin[4] * dMin[4];
 
-        for (int i = 0; i < strip.length - 2; i++) {
+        // Find the closest pair in the strip
+        for (int i = 0; i < j-2; i++){
             int k = i + 1;
-            while (k <= ponitsOnSterip - 1 && Math.pow((strip[k].getY() - strip[i].getY()), 2) < dminsq) {
-                dminsq = Math.min(dminsq, (int) (Math.pow((strip[k].getX() - strip[i].getX()), 2)
-                        + Math.pow((strip[k].getY() - strip[i].getY()), 2)));
+            while(k <= j-1 && Math.pow((strip[k].getY() - strip[i].getY()),2) < dminsq){
+                dminsq = (int) Math.min(Math.pow(strip[k].getX() - strip[i].getX(), 2) + Math.pow(strip[k].getY() - strip[i].getY(), 2), dminsq);
                 k++;
             }
         }
 
-        dminsq = (int) Math.sqrt(dminsq);
-
-        return new int[] { d[0], d[1], d[2], d[3], dminsq };
-        // return d;
+        // Return the closest pair
+        return new float[] { dMin[0], dMin[1], dMin[2], dMin[3], (float) Math.sqrt(dminsq) };
 
     }
 
     // Method to do it all
 
-    public static int[] closestPairSolver(int n) {
+
+    public static float[] closestPairSolver(int n) {
         points[] P = generatePoints(n);
         points[] Q = P.clone();
         Arrays.sort(P, points::compareX);
@@ -147,7 +155,7 @@ public class points {
     }
 
     // Method to exhaustiveSearch
-    public static int[] exhaustiveSearchSolver(int n) {
+    public static float[] exhaustiveSearchSolver(int n) {
         points[] P = generatePoints(n);
         points[] Q = P.clone();
         Arrays.sort(P, points::compareX);
