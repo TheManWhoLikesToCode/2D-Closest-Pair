@@ -6,7 +6,7 @@ public class Solver2DClosestPair {
     public static void main(String[] args) {
 
         long startTime, endTime, duration;
-        int pointsToTest = 50;
+        int pointsToTest = 5000;
         int trials = 1000;
         double [] fastAlgoTime = new double [trials];
         double [] slowAlgoTime = new double [trials];
