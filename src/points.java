@@ -2,7 +2,6 @@ import java.util.Arrays;
 
 public class points {
 
-    // Declare runCounter
     public static int runCounter = 0;
     // X and Y points
     public int x;
@@ -64,7 +63,7 @@ public class points {
         for (int i = start; i < end; i++) {
             splitArray[i - start] = points[i];
         }
-
+        
         return splitArray;
     }
 
@@ -111,9 +110,10 @@ public class points {
         // Find minimum distance
         float[] dMin = dLeft[4] < dRight[4] ? dLeft : dRight;
         float distanceMin = dMin[4];
+        //float distanceMin = d < dMin[4] ? d : dMin[4];
 
         // Find the middle point
-        int m = P[(P.length / 2) - 1].getX();
+        int m = P[(P.length / 2)-1].getX();
 
         // Find points in strip
         points[] strip = new points[P.length];
@@ -131,13 +131,10 @@ public class points {
         float dminsq = dMin[4] * dMin[4];
 
         // Find the closest pair in the strip
-        for (int i = 0; i < j - 2; i++) {
+        for (int i = 0; i < j-2; i++){
             int k = i + 1;
-            while (k <= j - 1 && Math.pow((strip[k].getY() - strip[i].getY()), 2) < dminsq) {
-                dminsq = (int) Math.min(
-                        Math.pow(strip[k].getX() - strip[i].getX(), 2) + Math.pow(strip[k].getY() - strip[i].getY(), 2),
-                        dminsq);
-                runCounter++;
+            while(k <= j-1 && Math.pow((strip[k].getY() - strip[i].getY()),2) < dminsq){
+                dminsq = (int) Math.min(Math.pow(strip[k].getX() - strip[i].getX(), 2) + Math.pow(strip[k].getY() - strip[i].getY(), 2), dminsq);
                 k++;
             }
         }
@@ -148,6 +145,7 @@ public class points {
     }
 
     // Method to do it all
+
 
     public static float[] closestPairSolver(int n) {
         points[] P = generatePoints(n);
