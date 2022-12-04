@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Solver2DClosestPair {
+public class runTime{
 
     // plot points
     public static void main(String[] args) {
