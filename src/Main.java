@@ -18,10 +18,10 @@ public class Main {
         scanner.close();
         
         // While loop to add points to a points array
-        points[] P = points.generatePoints(pointsToTest);
-        points[] Q = P.clone();
-        Arrays.sort(P, points::compareX);
-        Arrays.sort(Q, points::compareY);
+        Solver2DClosestPair[] P = Solver2DClosestPair.generatePoints(pointsToTest);
+        Solver2DClosestPair[] Q = P.clone();
+        Arrays.sort(P, Solver2DClosestPair::compareX);
+        Arrays.sort(Q, Solver2DClosestPair::compareY);
 
         // print the points if less than 15 points
         if (pointsToTest < 15) {
@@ -34,14 +34,14 @@ public class Main {
         // Print which algorithm is being used
         System.out.println();System.out.println("Using the fast algorithm");
         // Print the closest pair
-        float[] results = points.efficientClosetPair(P, Q);
+        double[] results = Solver2DClosestPair.efficientClosetPair(P, Q);
         System.out.println("Closest pair: (" + results[0] +", "+ results[1] + ") and (" + results[2] +", "+ results[3] + ")");
         System.out.println("Distance: " + results[4]); 
 
         // Print which algorithm is being used
         System.out.println(); System.out.println("Using the slow algorithm");
         // Brute force algorithm
-        float[] bruteForcePoints = points.exhaustiveSearch(P);
+        double[] bruteForcePoints = Solver2DClosestPair.exhaustiveSearch(P);
         System.out.println("Closest pair: (" + bruteForcePoints[0] +", "+ bruteForcePoints[1] + ") and (" + bruteForcePoints[2] +", "+ bruteForcePoints[3] + ")");
         System.out.println("Distance: " + bruteForcePoints[4]);
         

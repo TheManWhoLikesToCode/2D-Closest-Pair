@@ -13,14 +13,14 @@ public class runTime{
 
         for (int i = 0; i < trials; i++) {
 
-            points[] P = points.generatePoints(pointsToTest);
-            points[] Q = P.clone();
-            Arrays.sort(P, points::compareX);
-            Arrays.sort(Q, points::compareY);
+            Solver2DClosestPair[] P = Solver2DClosestPair.generatePoints(pointsToTest);
+            Solver2DClosestPair[] Q = P.clone();
+            Arrays.sort(P, Solver2DClosestPair::compareX);
+            Arrays.sort(Q, Solver2DClosestPair::compareY);
 
             // Start time
             startTime = System.nanoTime();
-            float[] fastAlgoPoints = points.efficientClosetPair(P, Q);
+            double[] fastAlgoPoints = Solver2DClosestPair.efficientClosetPair(P, Q);
             // End time
             endTime = System.nanoTime();
             // Duration
@@ -31,7 +31,7 @@ public class runTime{
 
             // Start time
             startTime = System.nanoTime();
-            float[] bruteForcePoints = points.exhaustiveSearch(P);
+            double[] bruteForcePoints = Solver2DClosestPair.exhaustiveSearch(P);
             // End time
             endTime = System.nanoTime();
             // Duration

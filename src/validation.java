@@ -4,26 +4,24 @@ public class validation {
 
     public static void main(String[] args) {
         // Check if the fast algorithm returns the same result as the slow algorithm
-        int pointsToTest = 4;
-        int trials = 100;
-        int highestRun = 0;
+        int pointsToTest = 100;
+        int trials = 1000;
+  
+
 
         // While loop to check if the fast algorithm returns the same result as the slow algorithm
         for (int i = 0; i < trials; i++) {
 
-            points[] P = points.generatePoints(pointsToTest);
-            points[] Q = P.clone();
-            Arrays.sort(P, points::compareX);
-            Arrays.sort(Q, points::compareY);
+            Solver2DClosestPair[] P = Solver2DClosestPair.generatePoints(pointsToTest);
+            Solver2DClosestPair[] Q = P.clone();
+            Arrays.sort(P, Solver2DClosestPair::compareX);
+            Arrays.sort(Q, Solver2DClosestPair::compareY);
 
             // Brute force algorithm
-            float[] bruteForcePoints = points.exhaustiveSearch(P);
+            double[] bruteForcePoints = Solver2DClosestPair.exhaustiveSearch(P);
             // Fast algorithm
-            float[] fastAlgoPoints = points.efficientClosetPair(P, Q);
-            if(points.runCounter > highestRun) {
-                highestRun = points.runCounter;
-            }
-            points.runCounter = 0;
+            double[] fastAlgoPoints = Solver2DClosestPair.efficientClosetPair(P, Q);
+
 
             // Check if the fast algorithm returns the same result as the slow algorithm
             if (fastAlgoPoints[4] != bruteForcePoints[4]) {
@@ -49,7 +47,7 @@ public class validation {
             }
         }
 
-        System.out.println("The highest number of runs was: " + highestRun);
+
 
 
     }
